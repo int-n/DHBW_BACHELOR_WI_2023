@@ -6,13 +6,10 @@ public abstract class Agent {
 
 	public abstract void setCosts(ArrayList<Integer> costs);
 
-	public abstract ArrayList<int[]> getProposalsClone();
-
-	public abstract void setProposalsClone(ArrayList<int[]> proposalsClone);
-
 	public abstract boolean vote(int[] contract, int[] proposal);
 	public abstract void    printUtility(int[] contract);
 	public abstract int     getContractSize();
 	public abstract void initProposalsClone(ArrayList<int[]> proposals);
 
+	public abstract int identifyWorstProposal(boolean firstLoop, int indexRemovedElem);
 }

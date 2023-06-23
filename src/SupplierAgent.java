@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class SupplierAgent extends Agent {
 
 	private int[][] costMatrix;
-	private ArrayList<int[]> proposalsClone = new ArrayList<int[]>();
+
 	private ArrayList<Integer> costs = new ArrayList<Integer>();
 
 	@Override
@@ -17,16 +17,6 @@ public class SupplierAgent extends Agent {
 	@Override
 	public void setCosts(ArrayList<Integer> costs) {
 		this.costs = costs;
-	}
-
-	@Override
-	public ArrayList<int[]> getProposalsClone() {
-		return proposalsClone;
-	}
-
-    @Override
-	public void setProposalsClone(ArrayList<int[]> proposalsClone) {
-		this.proposalsClone = proposalsClone;
 	}
 
 	public SupplierAgent(File file) throws FileNotFoundException {
@@ -76,9 +66,26 @@ public class SupplierAgent extends Agent {
 
 	@Override
 	public void initProposalsClone(ArrayList<int[]> proposals) {
-		for(int i=0;i<proposals.size();i++)this.proposalsClone.add(proposals.get(i));
-		for(int[] array: proposalsClone) {
+		for(int[] array: proposals) {
 			costs.add(evaluate(array));
 		}
+	}
+	@Override
+	public int identifyWorstProposal (boolean firstLoop, int indexRemovedElem) {
+		int max = 0;
+		int maxIndex = 0;
+
+		if (!firstLoop) {
+			this.costs.remove(indexRemovedElem);
+		}
+
+		for(int i = 0; i < this.costs.size(); i++) {
+			if (max < this.costs.get(i)){
+				max = this.costs.get(i);
+				maxIndex = i;
+			}
+		}
+		this.costs.remove(maxIndex);
+		return maxIndex;
 	}
 }
