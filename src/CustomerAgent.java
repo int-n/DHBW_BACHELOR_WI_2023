@@ -19,16 +19,6 @@ public class CustomerAgent extends Agent {
 		this.costs = costs;
 	}
 
-	@Override
-	public ArrayList<int[]> getProposalsClone() {
-		return proposalsClone;
-	}
-
-	@Override
-	public void setProposalsClone(ArrayList<int[]> proposalsClone) {
-		this.proposalsClone = proposalsClone;
-	}
-
 
 
 	public CustomerAgent(File file) throws FileNotFoundException {
@@ -117,13 +107,28 @@ public class CustomerAgent extends Agent {
 
 	@Override
 	public void initProposalsClone(ArrayList<int[]> proposals) {
-		for(int i=0;i<proposals.size();i++)this.proposalsClone.add(proposals.get(i));
 		for(int[] array: proposalsClone) {
 			costs.add(evaluateNEW(array));
 		}
 	}
+	@Override
+	public int identifyWorstProposal (boolean firstLoop, int indexRemovedElem) {
+		int max = 0;
+		int maxIndex = 0;
 
+		if (!firstLoop) {
+			this.costs.remove(indexRemovedElem);
+		}
 
+		for(int i = 0; i < this.costs.size(); i++) {
+			if (max < this.costs.get(i)){
+				max = this.costs.get(i);
+				maxIndex = i;
+			}
+		}
+		this.costs.remove(maxIndex);
+		return maxIndex;
+	}
 
 	
 }

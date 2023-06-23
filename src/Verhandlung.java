@@ -39,18 +39,43 @@ public class Verhandlung {
 				agB = new CustomerAgent(new File("data/daten4BCustomer_200_5.txt"));
 				//agB = new CustomerAdvanced(new File("data/daten4BCustomer_200_5.txt"));
 				med = new Mediator(agA.getContractSize(), agB.getContractSize());
-				
-				//Verhandlung initialisieren
-				ArrayList<int[]> proposals=new ArrayList<int[]>();
-				contract  = med.initContract();
-				for(int i = 0; i < 10; i++) {
+
+				contract = med.initContract();
+				int maxProposals = 101;
+
+				// Erzeugen der Proposals
+				ArrayList<int[]> proposals = new ArrayList<int[]>();
+				for(int i=0; i < maxProposals; i++) {
 					proposals.add(med.constructProposal(contract));
 				}
-				agB.initProposalsClone(proposals);
-				agA.initProposalsClone(proposals);
-				for(int i = 0; i < 10; i++) {
-					System.out.println(Arrays.toString(agB.getProposalsClone().get(i)));
-					System.out.println(agB.getCosts().get(i));
+
+				int removedElement = 0;
+
+				// Bestimmung, wer mit dem Rausstreichen der ungünstigsten Lösung beginnt
+				boolean coin = Math.random() < 0.5 ;
+
+				// Rausstreichen der ungünstigsten Lösungen
+				for(round = 0; round < proposals.size()-1; round++) {
+
+					boolean firstLoop;
+
+					if (round == 0) {
+						firstLoop = true;
+					} else {
+						firstLoop = false;
+					}
+
+					if (coin) {
+						removedElement = agA.identifyWorstProposal(firstLoop, removedElement);
+						removedElement = agB.identifyWorstProposal(firstLoop, removedElement);
+					} else {
+						removedElement = agB.identifyWorstProposal(firstLoop, removedElement);
+						removedElement = agA.identifyWorstProposal(firstLoop, removedElement);
+					}
+
+					System.out.print(proposals.toString());
+					System.out.print("Supplier: " + agA.getCosts().toString());
+					System.out.print("Customer: " + agB.getCosts().toString());
 				}
 
 

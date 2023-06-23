@@ -40,11 +40,6 @@ public class CustomerAdvanced {
 		return timeMatrix.length + 1;
 	}
 
-	@Override
-	public void initProposalsClone(ArrayList<int[]> proposals) {
-
-	}
-
 	public void printUtility(int[] contract) {
 		System.out.print(evaluate(contract));
 	}
