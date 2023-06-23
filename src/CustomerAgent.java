@@ -1,10 +1,19 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CustomerAgent extends Agent {
 
 	private int[][] timeMatrix;
+	private ArrayList<int[]> proposalsClone = new ArrayList<int[]>();
+	public ArrayList<int[]> getProposalsClone() {
+		return proposalsClone;
+	}
+
+	public void setProposalsClone(ArrayList<int[]> proposalsClone) {
+		this.proposalsClone = proposalsClone;
+	}
 
 	public CustomerAgent(File file) throws FileNotFoundException {
 
@@ -88,6 +97,11 @@ public class CustomerAgent extends Agent {
 //		}
 		
 		return (start[last][anzM-1]+timeMatrix[last][anzM-1]);
+	}
+
+	@Override
+	public void initProposalsClone(ArrayList<int[]> proposals) {
+		for(int i=0;i<proposals.size();i++)this.proposalsClone.add(proposals.get(i));
 	}
 
 	
