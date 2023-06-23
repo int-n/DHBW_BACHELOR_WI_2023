@@ -1,10 +1,19 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class SupplierAgent extends Agent {
 
 	private int[][] costMatrix;
+	private ArrayList<int[]> proposalsClone = new ArrayList<int[]>();
+	public ArrayList<int[]> getProposalsClone() {
+		return proposalsClone;
+	}
+
+	public void setProposalsClone(ArrayList<int[]> proposalsClone) {
+		this.proposalsClone = proposalsClone;
+	}
 
 	public SupplierAgent(File file) throws FileNotFoundException {
 
@@ -51,8 +60,7 @@ public class SupplierAgent extends Agent {
 	}
 
 	@Override
-	public int[][] advVote(int[][] proposals) {
-
-		return new int[0][];
+	public void initProposalsClone(ArrayList<int[]> proposals) {
+		for(int i=0;i<proposals.size();i++)this.proposalsClone.add(proposals.get(i));
 	}
 }
