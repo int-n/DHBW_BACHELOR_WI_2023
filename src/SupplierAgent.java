@@ -59,6 +59,7 @@ public class SupplierAgent extends Agent {
 		return result;
 	}
 
+
 	@Override
 	public void initProposalsClone(ArrayList<int[]> proposals) {
 		for(int i=0;i<proposals.size();i++)this.proposalsClone.add(proposals.get(i));
