@@ -1,7 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 //SIMULATION!
@@ -31,7 +31,7 @@ public class Verhandlung {
 			int[] contract, proposal;
 			Agent agA, agB;
 			Mediator med;
-			int maxProposals, round;
+			int maxRounds, round;
 			boolean voteA, voteB;
 			
 			try{
@@ -41,29 +41,20 @@ public class Verhandlung {
 				med = new Mediator(agA.getContractSize(), agB.getContractSize());
 				
 				//Verhandlung initialisieren
-				contract  = med.initContract();							//Vertrag=L�sung=Jobliste
-				maxProposals = 101;										//Verhandlungsrunden
-				ausgabe(agA, agB, 0, contract);
-				
-				// Erzeugen der Proposals
-				ArrayList<int[]> proposals = new ArrayList<int[]>();
-				for(int i=0; i < maxProposals; i++) {
+				ArrayList<int[]> proposals=new ArrayList<int[]>();
+				contract  = med.initContract();
+				for(int i = 0; i < 10; i++) {
 					proposals.add(med.constructProposal(contract));
 				}
-
-				// Bestimmung, wer mit dem Rausstreichen der ungünstigsten Lösung beginnt
-				boolean coin = Math.random() < 0.5 ;
-
-				// Rausstreichen der ungünstigsten Lösungen
-				for(round = 0; round < proposals.size(); round++) {
-
-					if (coin) {
-						System.out.print("True");        // Platzhalter -> Ersetzen durch neue Vote-Methode
-					} else {
-						System.out.print("False");        // Platzhalter -> Ersetzen durch neue Vote-Methode
-					}
-
+				agB.initProposalsClone(proposals);
+				agA.initProposalsClone(proposals);
+				for(int i = 0; i < 10; i++) {
+					System.out.println(Arrays.toString(agB.getProposalsClone().get(i)));
+					System.out.println(agB.getCosts().get(i));
 				}
+
+
+				
 			}
 			catch(FileNotFoundException e){
 				System.out.println(e.getMessage());

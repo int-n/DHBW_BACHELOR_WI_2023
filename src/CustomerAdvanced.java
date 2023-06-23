@@ -3,7 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class CustomerAdvanced extends Agent {
+public class CustomerAdvanced {
 
 	private int[][] timeMatrix;
 	private int[][] delayMatrix;// wird anhand der timeMatrix berechnet
@@ -37,7 +37,7 @@ public class CustomerAdvanced extends Agent {
 	}
 
 	public int getContractSize() {
-		return timeMatrix.length;
+		return timeMatrix.length + 1;
 	}
 
 	@Override
