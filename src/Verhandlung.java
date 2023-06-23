@@ -46,26 +46,12 @@ public class Verhandlung {
 				for(int i = 0; i < 10; i++) {
 					proposals.add(med.constructProposal(contract));
 				}
+				agB.initProposalsClone(proposals);
+				agA.initProposalsClone(proposals);
 				for(int i = 0; i < 10; i++) {
-					System.out.println(Arrays.toString(proposals.get(i)));
+					System.out.println(Arrays.toString(agB.getProposalsClone().get(i)));
+					System.out.println(agB.getCosts().get(i));
 				}
-											//Vertrag=L�sung=Jobliste
-				//maxRounds = 10000;										//Verhandlungsrunden
-				//ausgabe(agA, agB, 0, contract);
-
-
-				
-				//Verhandlung starten	
-				/*for(round=1;round<maxRounds;round++) {					//Mediator
-					proposal = med.constructProposal(contract);			//zweck: Win-win
-					voteA    = agA.vote(contract, proposal);            //Autonomie + Private Infos
-					voteB    = agB.vote(contract, proposal);
-
-					if(voteA && voteB) {
-						contract = proposal;
-						ausgabe(agA, agB, round, contract);
-					}
-				}*/
 
 
 				
