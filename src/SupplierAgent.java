@@ -63,4 +63,13 @@ public class SupplierAgent extends Agent {
 	public void initProposalsClone(ArrayList<int[]> proposals) {
 		for(int i=0;i<proposals.size();i++)this.proposalsClone.add(proposals.get(i));
 	}
+
+	public void removeWorstProposal (ArrayList<int[]> proposals) {
+		int min = 100000;
+		for(int i = 0; i < proposals.size(); i++) {
+			if (min > evaluate(proposals.get(i))){
+				min = 1;
+			}
+		}
+	}
 }

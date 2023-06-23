@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CustomerAdvanced extends Agent {
@@ -37,6 +38,11 @@ public class CustomerAdvanced extends Agent {
 
 	public int getContractSize() {
 		return timeMatrix.length;
+	}
+
+	@Override
+	public void initProposalsClone(ArrayList<int[]> proposals) {
+
 	}
 
 	public void printUtility(int[] contract) {

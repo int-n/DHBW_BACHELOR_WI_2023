@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -30,7 +31,7 @@ public class Verhandlung {
 			int[] contract, proposal;
 			Agent agA, agB;
 			Mediator med;
-			int maxRounds, round;
+			int maxProposals, round;
 			boolean voteA, voteB;
 			
 			try{
@@ -41,21 +42,28 @@ public class Verhandlung {
 				
 				//Verhandlung initialisieren
 				contract  = med.initContract();							//Vertrag=L�sung=Jobliste
-				maxRounds = 10000;										//Verhandlungsrunden
+				maxProposals = 101;										//Verhandlungsrunden
 				ausgabe(agA, agB, 0, contract);
 				
-				//Verhandlung starten	
-				for(round=1;round<maxRounds;round++) {					//Mediator				
-					proposal = med.constructProposal(contract);			//zweck: Win-win
-					voteA    = agA.vote(contract, proposal);            //Autonomie + Private Infos
-					voteB    = agB.vote(contract, proposal);
+				// Erzeugen der Proposals
+				ArrayList<int[]> proposals = new ArrayList<int[]>();
+				for(int i=0; i < maxProposals; i++) {
+					proposals.add(med.constructProposal(contract));
+				}
 
-					if(voteA && voteB) {
-						contract = proposal;
-						ausgabe(agA, agB, round, contract);
+				// Bestimmung, wer mit dem Rausstreichen der ungünstigsten Lösung beginnt
+				boolean coin = Math.random() < 0.5 ;
+
+				// Rausstreichen der ungünstigsten Lösungen
+				for(round = 0; round < proposals.size(); round++) {
+
+					if (coin) {
+						System.out.print("True");        // Platzhalter -> Ersetzen durch neue Vote-Methode
+					} else {
+						System.out.print("False");        // Platzhalter -> Ersetzen durch neue Vote-Methode
 					}
-				}			
-				
+
+				}
 			}
 			catch(FileNotFoundException e){
 				System.out.println(e.getMessage());
