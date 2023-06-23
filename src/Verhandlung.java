@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 //SIMULATION!
@@ -40,12 +41,22 @@ public class Verhandlung {
 				med = new Mediator(agA.getContractSize(), agB.getContractSize());
 				
 				//Verhandlung initialisieren
-				contract  = med.initContract();							//Vertrag=L�sung=Jobliste
-				maxRounds = 10000;										//Verhandlungsrunden
-				ausgabe(agA, agB, 0, contract);
+				ArrayList<int[]> proposals=new ArrayList<int[]>();
+				contract  = med.initContract();
+				for(int i = 0; i < 10; i++) {
+					proposals.add(med.constructProposal(contract));
+				}
+				for(int i = 0; i < 10; i++) {
+					System.out.println(Arrays.toString(proposals.get(i)));
+				}
+											//Vertrag=L�sung=Jobliste
+				//maxRounds = 10000;										//Verhandlungsrunden
+				//ausgabe(agA, agB, 0, contract);
+
+
 				
 				//Verhandlung starten	
-				for(round=1;round<maxRounds;round++) {					//Mediator				
+				/*for(round=1;round<maxRounds;round++) {					//Mediator
 					proposal = med.constructProposal(contract);			//zweck: Win-win
 					voteA    = agA.vote(contract, proposal);            //Autonomie + Private Infos
 					voteB    = agB.vote(contract, proposal);
@@ -54,7 +65,9 @@ public class Verhandlung {
 						contract = proposal;
 						ausgabe(agA, agB, round, contract);
 					}
-				}			
+				}*/
+
+
 				
 			}
 			catch(FileNotFoundException e){

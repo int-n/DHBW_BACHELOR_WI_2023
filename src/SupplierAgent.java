@@ -50,9 +50,4 @@ public class SupplierAgent extends Agent {
 		return result;
 	}
 
-	@Override
-	public int[][] advVote(int[][] proposals) {
-
-		return new int[0][];
-	}
 }
