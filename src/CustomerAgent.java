@@ -41,7 +41,7 @@ public class CustomerAgent extends Agent {
 	public boolean vote(int[] contract, int[] proposal) {
 		int timeContract = evaluateNEW(contract);
 		int timeProposal = evaluateNEW(proposal);
-		if (timeProposal < timeContract)
+		if (timeProposal <= timeContract)
 			return true;
 		else
 			return false;
@@ -127,6 +127,7 @@ public class CustomerAgent extends Agent {
 			}
 		}
 		if(this.costs.size() > 1){this.costs.remove(maxIndex);}
+		if(Verhandlung.proposals.size() > 1) {Verhandlung.proposals.remove(maxIndex);}
 		return maxIndex;
 	}
 

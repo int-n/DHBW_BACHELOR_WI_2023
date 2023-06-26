@@ -20,11 +20,14 @@ public class Mediator {
 	public int[] constructProposal(int[] contract) {
 		int[] proposal = new int[contractSize];
 		for(int i=0;i<proposal.length;i++)proposal[i] = contract[i];
-		int element = (int)((proposal.length-1)*Math.random());
-		int wert1   = proposal[element];
-		int wert2   = proposal[element+1];
-		proposal[element]   = wert2;
-		proposal[element+1] = wert1;
+		for(int i=1; i < 2; i++) {
+			int gap = (int) ((proposal.length - 1) * Math.random());
+			int element = (int) ((proposal.length - 1) * Math.random());
+			int wert1 = proposal[element];
+			int wert2 = proposal[gap];
+			proposal[element] = wert2;
+			proposal[gap] = wert1;
+		}
 		return proposal;
 	}
 

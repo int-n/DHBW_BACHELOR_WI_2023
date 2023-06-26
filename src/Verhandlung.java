@@ -25,8 +25,9 @@ import java.util.Arrays;
  */
 
 
-public class Verhandlung {	
+public class Verhandlung {
 
+	public static ArrayList<int[]> proposals = new ArrayList<int[]>();
 		public static void main(String[] args) {
 			int[] contract, proposal;
 			Agent agA, agB;
@@ -41,52 +42,82 @@ public class Verhandlung {
 				med = new Mediator(agA.getContractSize(), agB.getContractSize());
 
 				contract = med.initContract();
-				int maxProposals = 101;
+				int maxProposals = 10;
 
 				// Erzeugen der Proposals
-				ArrayList<int[]> proposals = new ArrayList<int[]>();
-				for(int i=0; i < maxProposals; i++) {
+				//ArrayList<int[]> proposals = new ArrayList<int[]>();
+				/*for(int i=0; i < maxProposals; i++) {
 					proposals.add(med.constructProposal(contract));
-				}
-				agA.initProposalsClone(proposals);
-				agB.initProposalsClone(proposals);
+				}*/
 
-				int removedElement = 0;
-
-				// Bestimmung, wer mit dem Rausstreichen der ungünstigsten Lösung beginnt
-				boolean coin = Math.random() < 0.5 ;
-
-				// Rausstreichen der ungünstigsten Lösungen
-				for(round = 0; round < (proposals.size() + 1) / 2; round++) {
-
-					boolean firstLoop;
-
-					if (round == 0) {
-						firstLoop = true;
-					} else {
-						firstLoop = false;
+				for(int gen = 1; gen <= 100; gen++) {
+					System.out.println("Generation: " + gen);
+					if (gen != 1) {
+						for (int i = 0; i < proposals.size(); i++) {
+							proposals.remove(i);
+						}
+						for (int i = 0; i < agA.getCosts().size(); i++) {
+							agA.getCosts().remove(i);
+						}
+						for (int i = 0; i < agB.getCosts().size(); i++) {
+							agB.getCosts().remove(i);
+						}
 					}
 
-					if (coin) {
-						removedElement = agA.identifyWorstProposal(firstLoop, removedElement);
-						System.out.println("Supplier: " + removedElement);
-						firstLoop = false;
-						removedElement = agB.identifyWorstProposal(firstLoop, removedElement);
-						System.out.println("Customer: " + removedElement);
-					} else {
-						removedElement = agB.identifyWorstProposal(firstLoop, removedElement);
-						System.out.println("Customer: " + removedElement);
-						firstLoop = false;
-						removedElement = agA.identifyWorstProposal(firstLoop, removedElement);
-						System.out.println("Supplier: " + removedElement);
-					}
+					/*for(int i=0; i < maxProposals; i++) {
+					proposals.add(med.constructProposal(contract));
+					}*/
 
-				}
+					while(proposals.size()<maxProposals) {
+						proposal = med.constructProposal(contract);
+						voteA = agA.vote(contract, proposal);
+						voteB = agB.vote(contract, proposal);
+
+						if (voteA && voteB) {
+							contract = proposal;
+							proposals.add(contract);
+						}
+					}
+					agA.initProposalsClone(proposals);
+					agB.initProposalsClone(proposals);
+
+					int removedElement = 0;
+
+					// Bestimmung, wer mit dem Rausstreichen der ungünstigsten Lösung beginnt
+					boolean coin = Math.random() < 0.5;
+
+					// Rausstreichen der ungünstigsten Lösungen
+					for (round = 0; round < (maxProposals + 1) / 2; round++) {
+
+						boolean firstLoop;
+
+						if (round == 0) {
+							firstLoop = true;
+						} else {
+							firstLoop = false;
+						}
+
+						if (coin) {
+							removedElement = agA.identifyWorstProposal(firstLoop, removedElement);
+							//System.out.println("Supplier: " + removedElement);
+							firstLoop = false;
+							removedElement = agB.identifyWorstProposal(firstLoop, removedElement);
+							//System.out.println("Customer: " + removedElement);
+						} else {
+							removedElement = agB.identifyWorstProposal(firstLoop, removedElement);
+							//System.out.println("Customer: " + removedElement);
+							firstLoop = false;
+							removedElement = agA.identifyWorstProposal(firstLoop, removedElement);
+							//System.out.println("Supplier: " + removedElement);
+						}
+
+					}
 
 				System.out.println("Proposal: " + agA.getCosts().get(0) + " : " + agB.getCosts().get(0));
 				System.out.println("Supplier: " + agA.getCosts().toString());
 				System.out.println("Customer: " + agB.getCosts().toString());
-
+				contract = proposals.get(0);
+				}
 
 				
 			}

@@ -36,7 +36,7 @@ public class SupplierAgent extends Agent {
 	public boolean vote(int[] contract, int[] proposal) {
 		int costContract = evaluate(contract);
 		int costProposal = evaluate(proposal);
-		if (costProposal < costContract)
+		if (costProposal <= costContract)
 			return true;
 		else
 			return false;
@@ -86,6 +86,7 @@ public class SupplierAgent extends Agent {
 			}
 		}
 		if(this.costs.size() > 1) {this.costs.remove(maxIndex);}
+		if(Verhandlung.proposals.size() > 1) {Verhandlung.proposals.remove(maxIndex);}
 		return maxIndex;
 	}
 }
