@@ -48,6 +48,8 @@ public class Verhandlung {
 				for(int i=0; i < maxProposals; i++) {
 					proposals.add(med.constructProposal(contract));
 				}
+				agA.initProposalsClone(proposals);
+				agB.initProposalsClone(proposals);
 
 				int removedElement = 0;
 
@@ -55,7 +57,7 @@ public class Verhandlung {
 				boolean coin = Math.random() < 0.5 ;
 
 				// Rausstreichen der ungünstigsten Lösungen
-				for(round = 0; round < proposals.size()-1; round++) {
+				for(round = 0; round < (proposals.size() + 1) / 2; round++) {
 
 					boolean firstLoop;
 
@@ -67,16 +69,23 @@ public class Verhandlung {
 
 					if (coin) {
 						removedElement = agA.identifyWorstProposal(firstLoop, removedElement);
+						System.out.println("Supplier: " + removedElement);
+						firstLoop = false;
 						removedElement = agB.identifyWorstProposal(firstLoop, removedElement);
+						System.out.println("Customer: " + removedElement);
 					} else {
 						removedElement = agB.identifyWorstProposal(firstLoop, removedElement);
+						System.out.println("Customer: " + removedElement);
+						firstLoop = false;
 						removedElement = agA.identifyWorstProposal(firstLoop, removedElement);
+						System.out.println("Supplier: " + removedElement);
 					}
 
-					System.out.print(proposals.toString());
-					System.out.print("Supplier: " + agA.getCosts().toString());
-					System.out.print("Customer: " + agB.getCosts().toString());
 				}
+
+				System.out.println("Proposal: " + agA.getCosts().get(0) + " : " + agB.getCosts().get(0));
+				System.out.println("Supplier: " + agA.getCosts().toString());
+				System.out.println("Customer: " + agB.getCosts().toString());
 
 
 				

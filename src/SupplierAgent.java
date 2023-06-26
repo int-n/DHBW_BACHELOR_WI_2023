@@ -76,7 +76,7 @@ public class SupplierAgent extends Agent {
 		int maxIndex = 0;
 
 		if (!firstLoop) {
-			this.costs.remove(indexRemovedElem);
+			if(this.costs.size() > 1){this.costs.remove(indexRemovedElem);}
 		}
 
 		for(int i = 0; i < this.costs.size(); i++) {
@@ -85,7 +85,7 @@ public class SupplierAgent extends Agent {
 				maxIndex = i;
 			}
 		}
-		this.costs.remove(maxIndex);
+		if(this.costs.size() > 1) {this.costs.remove(maxIndex);}
 		return maxIndex;
 	}
 }

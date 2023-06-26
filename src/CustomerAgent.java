@@ -107,7 +107,7 @@ public class CustomerAgent extends Agent {
 
 	@Override
 	public void initProposalsClone(ArrayList<int[]> proposals) {
-		for(int[] array: proposalsClone) {
+		for(int[] array: proposals) {
 			costs.add(evaluateNEW(array));
 		}
 	}
@@ -117,7 +117,7 @@ public class CustomerAgent extends Agent {
 		int maxIndex = 0;
 
 		if (!firstLoop) {
-			this.costs.remove(indexRemovedElem);
+			if(this.costs.size() > 1){this.costs.remove(indexRemovedElem);}
 		}
 
 		for(int i = 0; i < this.costs.size(); i++) {
@@ -126,7 +126,7 @@ public class CustomerAgent extends Agent {
 				maxIndex = i;
 			}
 		}
-		this.costs.remove(maxIndex);
+		if(this.costs.size() > 1){this.costs.remove(maxIndex);}
 		return maxIndex;
 	}
 
